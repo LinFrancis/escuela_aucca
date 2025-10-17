@@ -324,6 +324,48 @@ if selected_taller in taller_vars:
 else:
     st.info("Este taller no tiene preguntas asociadas de conocimiento.")
 
+
+# ===========================================
+# INFORMACIÓN BÁSICA DE PARTICIPANTES
+# ===========================================
+with st.expander("Ver información detallada de participantes"):
+    st.markdown("Esta tabla muestra la información general de las personas inscritas en el taller seleccionado.")
+
+    cols_basic = [
+        "Nombre completo",
+        "Edad",
+        "Género",
+        "Teléfono",
+        "Dirección de correo electrónico",
+        "Territorio donde vives:",
+        "¿Estás inscrita/o en el Registro Social de Hogares?",
+        COL_CUIDADORA,
+        COL_INFANCIAS
+    ]
+
+    # Filtrar columnas existentes en la base
+    cols_existentes = [c for c in cols_basic if c in df_filtered.columns]
+
+    if not df_filtered.empty:
+        st.dataframe(
+            df_filtered[cols_existentes].rename(columns={
+                "Nombre completo": "Participante",
+                "Edad": "Edad (años)",
+                "Género": "Género",
+                "Teléfono": "Teléfono",
+                "Dirección de correo electrónico": "Correo",
+                "Territorio donde vives:": "Territorio",
+                "¿Estás inscrita/o en el Registro Social de Hogares?": "Registro Social de Hogares",
+                COL_CUIDADORA: "¿Es cuidadora/o?",
+                COL_INFANCIAS: "Infancias registradas"
+            }),
+            use_container_width=True
+        )
+    else:
+        st.info("No hay participantes registrados para el filtro seleccionado.")
+
+
+
 # ===========================================
 # MOTIVACIONES
 # ===========================================
@@ -334,4 +376,5 @@ for _, row in df_filtered.iterrows():
     comentario = row[COL_MOTIVOS]
     if pd.notna(comentario) and len(str(comentario).strip()) > 1:
         st.markdown(f"**{nombre}:** {comentario}")
+
 
