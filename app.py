@@ -13,7 +13,7 @@ logo_path = "logo_aucca.png"
 col1, col2 = st.columns([1, 5])
 with col1:
     logo = Image.open(logo_path)
-    st.image(logo, use_container_width=True)
+    st.image(logo, use_column_width=True)
 with col2:
     st.markdown("""
         <div style='padding-top:10px;'>
@@ -334,3 +334,4 @@ for _, row in df_filtered.iterrows():
     comentario = row[COL_MOTIVOS]
     if pd.notna(comentario) and len(str(comentario).strip()) > 1:
         st.markdown(f"**{nombre}:** {comentario}")
+
